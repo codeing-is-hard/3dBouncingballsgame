@@ -21,21 +21,19 @@ public class PlatformSpawner : MonoBehaviour
 
     public void SpawnPlatform()
     {
-        GameObject 
+        GameObject clone = Instantiate(platformPrefab);     //새로운 발판 생성과정
+
+        clone.GetComponent<Platform>().Setup(spawner);
+
+        ResetPlatform(clone.transform);     //발판의 위치를 설정함
     }
 
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void ResetPlatform(Transform transform,float y=0)
     {
-        
-    }
+        float x = Random.Range(-xRange, xRange);        //발판이 배치되는 x축위치를 -xRange ~ xRange 사이로 설정
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.position = new Vector3(x, y, platformIndex * zDistance);      //발판이 배치되는 위치 설정과정
+                                                                                //(z축은 현재 발판의 인덱스값*zDistance를곱한값,발판 사이의 거리=zDistance)
     }
 }
