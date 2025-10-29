@@ -41,7 +41,7 @@ public class Platform : MonoBehaviour
             //시간경과(최대 1)에 따라 오브젝트의 y좌표 위치를 바꿔준다.
             transform.position = new Vector3(transform.position.x, y, transform.position.z);
 
-            yield rerurn null;
+            yield return null;
         }
     }
     

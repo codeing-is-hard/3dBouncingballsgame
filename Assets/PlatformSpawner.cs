@@ -13,7 +13,7 @@ public class PlatformSpawner : MonoBehaviour
 
     private void Awake()
     {
-        for(int i=0;i<spawnPlatformCountStart;++i)      //spawnPlatformCountStart에 저장된 갯수만큼 최초 플랫폼을 생성해줌
+        for (int i = 0; i < spawnPlatformCountStart; ++ i)       //spawnPlatformCountStart에 저장된 갯수만큼 최초 플랫폼을 생성해줌
         {
             SpawnPlatform();
         }
@@ -23,14 +23,16 @@ public class PlatformSpawner : MonoBehaviour
     {
         GameObject clone = Instantiate(platformPrefab);     //새로운 발판 생성과정
 
-        clone.GetComponent<Platform>().Setup(spawner);
+        clone.GetComponent<Platform>().Setup(this);         //그 발판의 컴포넌트를 제너릭 상태의 플랫폼의 셋업 메소드 안에 잇는 플랫폼 스포너에서 가져와서
+                                                            //(this==플랫폼스포너{자기자신을}를가리킨다.)++ 이부분왜안되는지모름..
 
-        ResetPlatform(clone.transform);     //발판의 위치를 설정함
+        ResetPlatform(clone.transform);     //발판의 위치를 설정한다      //왜멈추는지모름..
     }
 
 
     public void ResetPlatform(Transform transform,float y=0)
     {
+        platformIndex++;
         float x = Random.Range(-xRange, xRange);        //발판이 배치되는 x축위치를 -xRange ~ xRange 사이로 설정
 
         transform.position = new Vector3(x, y, platformIndex * zDistance);      //발판이 배치되는 위치 설정과정
