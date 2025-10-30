@@ -9,6 +9,7 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private int spawnPlatformCountStart = 12;      //게임 시작시 최초 생성되는 발판의갯수
     [SerializeField] private float xRange = 10;     //발판이 배치될수있는x좌표의범위(+10~-10range값)
     [SerializeField] private float zDistance = 3;   //발판 사이의 거리(z축)
+
     private int platformIndex = 0;      //발판 인덱스로 배치되는 발판의 z축 위치를 연산할 때 사용함
 
     private void Awake()
