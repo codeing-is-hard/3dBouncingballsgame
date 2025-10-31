@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private float gravity = -9.81f;
     private int platformIndex = 0;
 
-    private IEnumerator Start()     //인터페이스이므로 yield반환문필수!
+    private IEnumerator Start()     //인터페이스이므로 yield반환문필수!,유니티이벤트로쓰고싶으면 start가아닌다른메소드명으로바꿔야함!!
     {
         while(true)     //마우스 왼쪽 버튼을 누르기 전까지 시작하지 않고 대기하는 코드
         {
@@ -29,13 +28,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveLoop()
+    private IEnumerator MoveLoop()      //현재 플레이어가 밟게되는 발판과 다음 발판의
+                                        //z축위치를 계산하여 yield반환문의 MoveToYZ()메소드의 코루틴 이벤트에 전달하고
+                                        //
     {
         while(true)
         {
             platformIndex++;
 
-            //float current=
+            float current = (platformIndex - 1) * platformSpawner.zDistance;
+            float next = platformIndex * platformSpawner.zDistance;
+
+            //플레이어의 y,z축의 위치를 제어하는 코루틴 이벤트(yield return 반환문으로 무브루프를 일시정지,
+            //새로운 코루틴을 실행시키고 끝날때까지 yield에서 일시 정지하고 끝나면 yield다음 줄 실행,지금 경우에는 없으므로
+            //항상 참인 while문의 조건을 확인하고 다시 첫 줄부터 실행
+            yield return StartCoroutine(MoveToYZ(current, next));
         }
     }
 
@@ -85,7 +92,33 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
     }
 
+    private IEnumerator MoveToYZ(float start, float end)        //y,z좌표 이동과 관련된 메소드
+    {
+        float current = 0;              //일정한 도달 속도를 유지해주기위해 time.deltatime을 더해서 넣어줄 임시 저장 변수
+        float percent = 0;              //시간 연산할때 쓸 퍼센트 
+        float v0 = -gravity;            //중력(gravity)은 항상 아랫쪽으로 작용하므로 음수로 적어줘야함
 
+        while(percent<1)        //0~1사이의 실수값, 진행도가0~1사이이면 아래루프실행
+        {
+            current += Time.deltaTime;
+            percent = current / moveTime;       // 현재까지걸린시간 / 전체 걸려야하는시간=진행률을 의미
+
+            //시간 경과에 따라 오브젝트의 y축위치를 바꿔준다
+            //y축은 실제 보여지는 스피어(구체)오브젝트가 포물선 이동을 하도록 만든다.
+            //실수y=포물선 운동 공식으로 포물선운동 == 시작위치+초기속도*시간+중력*시간의 제곱으로 구현한다.
+            float y = minPositionY + (v0 * percent) + (gravity * percent * percent);
+
+            playerObject.position = new Vector3(playerObject.position.x, y, playerObject.position.z);
+
+            //시간경과(0~1사이)에따라 오브젝트의 z축위치를바꿔준다.
+            float z=Mathf.Lerp(start,end, percent);
+            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+
+
+            yield return null;  //IEnumerator 인터페이스는 반드시 하나이상의 yield return문이있어야하고 tield return을만나면 다음으로진행하지않고일시중지
+                                //후 유니티의 재시작 요청이 잇을 때까지 대기
+        }
+    }
 
 
 
