@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6696037204308054435}
   - component: {fileID: -6590479976028616414}
-  - component: {fileID: -3969820319862386128}
+  - component: {fileID: -3586643690383640267}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20cb03afda959d14d9496d750dfd7631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformColors: []
+  platformMaterial: {fileID: 0}
   platformPrefab: {fileID: 2595523296534205404}
   SpawnPlatformCountStart: 10
   xRange: 10
   zDistance: 3
   platformIndex: 0
---- !u!114 &-3969820319862386128
+--- !u!114 &-3586643690383640267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4b10bf48c088b40af72fb9026d25d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinObject: {fileID: 5968058486466550064}
+  coinSpawnPercent: 40
 --- !u!1 &4082998911474335706
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +185,7 @@ GameObject:
   - component: {fileID: 6340605717353568536}
   - component: {fileID: 2606184525579874898}
   - component: {fileID: 4021696317660320710}
+  - component: {fileID: 1988320491064930350}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -276,3 +281,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &1988320491064930350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5968058486466550064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b8e1747e3ead94f9b304fdc5e8513b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinEffectPrefab: {fileID: 2031471735735655545, guid: f61f8a2125550d043b0d890cb4302fd4, type: 3}
+  rotateSpeed: 100

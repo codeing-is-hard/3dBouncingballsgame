@@ -2,19 +2,33 @@ using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
+    [SerializeField] private Color[] platformColors;        //발판의 색상을 배열로 반환
+    [SerializeField] private Material platformMaterial;     //발판의 색상 설정(메테리얼로)
+
 
     [SerializeField] private GameObject platformPrefab;         //발판을 만들기위한 프리팹
-    [SerializeField] private int SpawnPlatformCountStart = 10;      //게임 시작시 최초 생성되는 발판의갯수
-    [SerializeField] private float xRange = 10;     //발판이 배치될수있는x좌표의범위(+10~-10range값)
-    [SerializeField] public float zDistance = 3;   //발판 사이의 거리(z축)
+    [SerializeField] private int SpawnPlatformCountStart = 6;      //게임 시작시 최초 생성되는 발판의갯수
+    [SerializeField] private float xRange = 8;     //발판이 배치될수있는x좌표의범위(+10~-10range값)
+    [SerializeField] public float zDistance = 2;   //발판 사이의 거리(z축)
 
     [SerializeField] private int platformIndex = 0;      //발판 인덱스로 배치되는 발판의 z축 위치를 연산할 때 사용함
 
-
+    public float ZDistance          //읽기 전용 프로퍼티 구현, 외부에서 발판 사이의 거리값 을 반환
+    {
+        get
+        {
+            return zDistance;
+        }
+    }
 
     private void Awake()
     {
-        for (int i = 0; i < SpawnPlatformCountStart; ++i)       //spawnPlatformCountStart에 저장된 갯수만큼 최초 플랫폼을 생성해줌
+
+        //최초 발판의 색상은 platformColors[0] (배열의 처음)색상으로 설정
+        platformMaterial.color= platformColors[0];
+
+
+        for (int i = 0; i < SpawnPlatformCountStart; ++ i)       //spawnPlatformCountStart에 저장된 갯수만큼 최초 플랫폼을 생성해줌
         {
             SpawnPlatform();
         }
@@ -34,9 +48,17 @@ public class PlatformSpawner : MonoBehaviour
     public void ResetPlatform(Transform transform, float y = 0)
     {
         platformIndex++;
+
         float x = Random.Range(-xRange, xRange);        //발판이 배치되는 x축위치를 -xRange ~ xRange 사이로 설정
 
         transform.position = new Vector3(x, y, platformIndex * zDistance);      //발판이 배치되는 위치 설정과정
                                                                                 //(z축은 현재 발판의 인덱스값*zDistance를곱한값,발판 사이의 거리=zDistance)
+    }
+
+    public void SetPlatformColor()
+    {
+        //화면에 등장하는 모든 플랫폼의 색상을 설정하는 메소드
+        int index=Random.Range(0,platformColors.Length);
+        platformMaterial.color = platformColors[index];
     }
 }
