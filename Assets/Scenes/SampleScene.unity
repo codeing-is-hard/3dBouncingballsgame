@@ -1133,8 +1133,8 @@ MonoBehaviour:
   - {r: 1, g: 0.97662324, b: 0, a: 0}
   platformMaterial: {fileID: 2100000, guid: 08fbbeffff51dd649aaf1bf6404c5d7d, type: 2}
   platformPrefab: {fileID: 2595523296534205404, guid: 1ced68513b65580479ed750b13ed2e37, type: 3}
-  SpawnPlatformCountStart: 10
-  xRange: 10
+  SpawnPlatformCountStart: 6
+  xRange: 7
   zDistance: 3
   platformIndex: 0
 --- !u!1 &1584636817
@@ -1336,6 +1336,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -3969820319862386128, guid: 1ced68513b65580479ed750b13ed2e37, type: 3}
     - {fileID: -3586643690383640267, guid: 1ced68513b65580479ed750b13ed2e37, type: 3}
+    - {fileID: -6590479976028616414, guid: 1ced68513b65580479ed750b13ed2e37, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
